@@ -89,11 +89,11 @@ h1, h2, h3, h4 {
 }
 a { text-decoration: none; color: inherit; }
 ul { list-style: none; }
-button { font-family: inherit; cursor: pointer; }
+button { font-family: inherit; }
 img { max-width: 100%; height: auto; display: block; }
 
 /* ══════════════════════════════════════════
-   CURSOR GLOW (radial que sigue al mouse)
+   CURSOR GLOW SUTIL
 ══════════════════════════════════════════ */
 #cursor-glow {
   position: fixed;
@@ -134,7 +134,7 @@ img { max-width: 100%; height: auto; display: block; }
 
 /* ══════════════════════════════════════════
    GRID PARALLAX 3D
-══════════════════════════════════════════ */
+═════════════════════════════════════��════ */
 #grid {
   position: fixed;
   inset: -20vh 0;
@@ -201,19 +201,22 @@ img { max-width: 100%; height: auto; display: block; }
 @keyframes wave-out { to { transform: translate(-50%,-50%) scale(3); opacity: 0; } }
 
 /* ══════════════════════════════════════════
-   CONFETTI PARTICLE
+   CONFETTI
 ══════════════════════════════════════════ */
 .confetti {
   position: fixed;
   pointer-events: none;
   z-index: 9996;
-  animation: confetti-fall 2s ease-in forwards;
-  will-change: transform, opacity;
+  animation: confetti-fall .8s ease-out forwards;
 }
 @keyframes confetti-fall {
-  to {
-    transform: translateY(800px) rotateX(720deg) rotateY(360deg) rotateZ(360deg);
+  0% {
+    opacity: 1;
+    transform: translate(0, 0) rotateZ(0deg) scale(1);
+  }
+  100% {
     opacity: 0;
+    transform: translate(var(--tx), var(--ty)) rotateZ(var(--rz)) scale(0.5);
   }
 }
 
@@ -243,7 +246,6 @@ img { max-width: 100%; height: auto; display: block; }
   color: var(--tw);
   letter-spacing: .04em;
   backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
   white-space: nowrap;
   box-shadow: 0 10px 40px rgba(0,0,0,0.6);
   animation: toast-in .4s var(--bz) forwards;
@@ -253,7 +255,7 @@ img { max-width: 100%; height: auto; display: block; }
 @keyframes toast-out { from{opacity:1;transform:translateY(0) scale(1)} to{opacity:0;transform:translateY(-15px) scale(.95)} }
 
 /* ══════════════════════════════════════════
-   DATA NOTIFICATION (bottom-left, reemplazo de purchase notif)
+   DATA NOTIFICATION (bottom-left)
 ══════════════════════════════════════════ */
 #data-notif {
   position: fixed;
@@ -262,29 +264,22 @@ img { max-width: 100%; height: auto; display: block; }
   z-index: 9994;
   background: rgba(12,12,12,0.95);
   border: 1px solid rgba(255,255,255,0.1);
-  border-left: 3px solid rgba(255,255,255,0.4);
-  border-radius: 8px;
+  border-left: 3px solid rgba(255,255,255,0.3);
+  border-radius: 12px;
   padding: 14px 18px;
-  max-width: 280px;
+  max-width: 300px;
   backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
   box-shadow: 0 10px 40px rgba(0,0,0,0.7);
+  font-size: .85rem;
+  line-height: 1.5;
+  color: var(--tl);
   opacity: 0;
   transform: translateX(-30px);
   transition: opacity .4s, transform .4s var(--bz);
   pointer-events: none;
-  font-size: .85rem;
-  line-height: 1.5;
-  color: var(--tl);
-  will-change: opacity, transform;
 }
-#data-notif.show {
-  opacity: 1;
-  transform: translateX(0);
-}
-#data-notif-text {
-  will-change: contents;
-}
+#data-notif.show { opacity: 1; transform: translateX(0); }
+#data-notif strong { color: var(--tw); font-weight: 600; }
 
 /* ══════════════════════════════════════════
    NAVBAR
@@ -328,6 +323,7 @@ img { max-width: 100%; height: auto; display: block; }
   text-transform: uppercase; letter-spacing: .06em; border-radius: 4px;
   transition: all .3s var(--bz);
   border: none;
+  cursor: pointer;
 }
 .nav-cta:hover { transform: scale(1.05); box-shadow: 0 0 20px rgba(255,255,255,0.25); }
 
@@ -357,6 +353,8 @@ img { max-width: 100%; height: auto; display: block; }
   font-family: var(--fh); font-weight: 700; font-size: 1.3rem;
   text-transform: uppercase; color: var(--tm); letter-spacing: -.01em;
   transition: color .2s, transform .2s;
+  background: none; border: none;
+  cursor: pointer;
 }
 #nav-drawer a:hover { color: var(--tw); transform: translateX(8px); }
 
@@ -371,7 +369,6 @@ section {
   position: relative; opacity: 0;
   transform: translateY(40px) scale(0.98);
   transition: opacity .7s var(--bz), transform .7s var(--bz);
-  will-change: opacity, transform;
 }
 section.in  { opacity: 1; transform: translateY(0) scale(1); }
 section.out { opacity: 0; transform: translateY(-20px); transition: opacity .4s, transform .4s; }
@@ -398,8 +395,8 @@ section.in .stagger-child {
   font-family: var(--fh); font-weight: 700; font-size: .9rem;
   text-transform: uppercase; letter-spacing: .04em; border-radius: 4px;
   border: none; transition: all .3s var(--bz); position: relative; overflow: hidden;
-  will-change: transform;
   cursor: pointer;
+  will-change: transform, box-shadow;
 }
 .btn::before {
   content: ''; position: absolute; top: 0; left: -100%;
@@ -421,7 +418,7 @@ section.in .stagger-child {
   background: rgba(255,255,255,0.05);
   box-shadow: 0 0 20px rgba(255,255,255,0.08);
 }
-.hover-card { transition: all .3s var(--bz); will-change: transform; }
+.hover-card { transition: all .3s var(--bz); }
 .hover-card:hover { transform: scale(1.02) translateY(-6px); box-shadow: 0 20px 50px rgba(255,255,255,0.07); }
 
 /* Vibration on hover */
@@ -431,6 +428,16 @@ section.in .stagger-child {
   75%    {transform:translateX(2px) scale(1.04) translateY(-2px)}
 }
 .btn:hover { animation: vibrate .12s ease-in-out 2; }
+
+/* Button pulse on click */
+@keyframes btn-pulse {
+  0%   { transform: scale(1); }
+  50%  { transform: scale(0.95); }
+  100% { transform: scale(1.05); }
+}
+.btn-pulse {
+  animation: btn-pulse .2s ease-out forwards;
+}
 
 /* ══════════════════════════════════════════
    HERO
@@ -494,7 +501,7 @@ section.in .stagger-child {
   -webkit-backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.06);
   border-radius: 12px; padding: 36px 28px; text-align: left;
   transition: all .3s var(--bz); transform-style: preserve-3d;
-  will-change: border-color, transform, box-shadow;
+  will-change: transform, box-shadow;
 }
 .about-card:hover {
   border-color: rgba(255,255,255,0.15); transform: translateY(-6px);
@@ -531,8 +538,9 @@ section.in .stagger-child {
   font-size: clamp(1.1rem, 2.2vw, 1.8rem); font-family: var(--fh); color: var(--tm);
   margin-bottom: 28px; opacity: 0; transform: translateY(20px);
   transition: all .4s ease; display: flex; align-items: center; gap: 18px;
-  cursor: pointer; padding: 20px 24px; border-radius: 8px; border: 1px solid transparent;
-  will-change: color, background, border-color, transform, text-shadow;
+  padding: 20px 24px; border-radius: 8px; border: 1px solid transparent;
+  cursor: pointer;
+  will-change: transform, color;
 }
 .pain-item.visible { opacity: 1; transform: translateY(0); }
 .pain-item:hover {
@@ -564,16 +572,17 @@ section.in .stagger-child {
   background: var(--tw); border-radius: 50%; transform: translateY(-50%);
   box-shadow: 0 0 20px 8px rgba(255,255,255,0.4); z-index: 2;
   opacity: 0; transition: left .5s var(--bz), opacity .3s;
-  will-change: left;
+  will-change: transform;
 }
 .scale-letter {
   font-size: 2rem; font-family: var(--fh); font-weight: 900; color: var(--tm);
   background: var(--bg); width: 72px; height: 72px;
   display: flex; align-items: center; justify-content: center;
   border-radius: 50%; border: 1px solid rgba(255,255,255,0.1); z-index: 3;
-  cursor: pointer; transition: all .3s var(--bz), transform .2s; position: relative;
+  transition: all .3s var(--bz), transform .2s; position: relative;
   transform-style: preserve-3d;
-  will-change: color, border-color, transform, box-shadow;
+  cursor: pointer;
+  will-change: transform, box-shadow;
 }
 .scale-letter:hover {
   color: var(--tw); border-color: rgba(255,255,255,0.5);
@@ -588,7 +597,6 @@ section.in .stagger-child {
 .scale-letter.launching {
   animation: rocket-launch 1.5s cubic-bezier(0.5,0,0.2,1) forwards;
   border-color: transparent; color: transparent; pointer-events: none; z-index: 50;
-  will-change: transform;
 }
 .scale-letter.launching span { display: none; }
 .scale-letter.launching svg.rocket-icon { display: block; animation: rocket-pulse .2s infinite alternate; }
@@ -614,7 +622,6 @@ section.in .stagger-child {
   position: fixed; width: 6px; height: 6px; border-radius: 50%;
   background: #fff; pointer-events: none; z-index: 18;
   animation: trail-fade .6s ease-out forwards;
-  will-change: transform, opacity;
 }
 @keyframes trail-fade { to{opacity:0;transform:scale(0)} }
 
@@ -625,12 +632,16 @@ section.in .stagger-child {
   text-align: left; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
 }
 .scale-display-inner { animation: slide-in .4s var(--bz) forwards; }
-.scale-display-inner.vibrate { animation: text-vibrate .2s ease-in-out; }
 @keyframes slide-in { from{opacity:0;transform:translateX(-25px)} to{opacity:1;transform:translateX(0)} }
+
+/* Scale text vibration */
 @keyframes text-vibrate {
-  0%,100%{transform:translateX(0)}
-  25%    {transform:translateX(-2px)}
-  75%    {transform:translateX(2px)}
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-2px); }
+  75% { transform: translateX(2px); }
+}
+.scale-display-inner.vibrate {
+  animation: text-vibrate .2s ease-in-out;
 }
 
 /* ══════════════════════════════════════════
@@ -650,14 +661,13 @@ section.in .stagger-child {
   -webkit-backdrop-filter: blur(10px); padding: 36px 30px; border-radius: 12px;
   border: 1px solid rgba(255,255,255,0.06); position: relative; overflow: hidden;
   transition: all .3s var(--bz);
-  will-change: border-color, transform, box-shadow;
+  will-change: transform, box-shadow;
 }
 .result-card::before {
   content: ''; position: absolute; top: 0; left: -100%;
   width: 50%; height: 100%;
   background: linear-gradient(90deg, transparent, rgba(255,255,255,0.04), transparent);
   transform: skewX(-20deg); transition: .8s;
-  will-change: left;
 }
 .result-card:hover::before { left: 200%; }
 .result-card:hover { border-color: rgba(255,255,255,0.2); box-shadow: 0 20px 60px rgba(255,255,255,0.06); transform: translateY(-6px); }
@@ -681,7 +691,7 @@ section.in .stagger-child {
 .result-metric-n {
   font-family: var(--fh); font-weight: 800; font-size: 1.4rem; color: var(--tw);
   display: block; line-height: 1; margin-bottom: 4px;
-  will-change: contents;
+  will-change: transform;
 }
 .result-metric-l { font-size: .75rem; color: var(--tm); text-transform: uppercase; letter-spacing: .08em; }
 .result-chart { width: 100%; height: 70px; margin-top: 20px; overflow: visible; }
@@ -691,14 +701,13 @@ section.in .stagger-child {
   stroke-dasharray: 400; stroke-dashoffset: 400;
   filter: drop-shadow(0 0 6px rgba(255,255,255,0.5));
   transition: stroke-dashoffset 1.2s var(--bz);
-  will-change: stroke-dashoffset;
 }
 /* Draw on scroll + hover */
 .chart-path.drawn { stroke-dashoffset: 0; }
 .result-card:hover .chart-path { stroke-dashoffset: 0; }
 
 /* ══════════════════════════════════════════
-   DIAGNÓSTICO (6 PREGUNTAS)
+   DIAGNÓSTICO
 ══════════════════════════════════════════ */
 #survey { padding-top: 100px; }
 .survey-box {
@@ -715,7 +724,6 @@ section.in .stagger-child {
 .progress-bar {
   height: 100%; background: var(--tw); width: 0%;
   transition: width .5s var(--bz); box-shadow: 0 0 8px rgba(255,255,255,0.5);
-  will-change: width;
 }
 .progress-label { font-size: .8rem; color: var(--tm); margin-top: 10px; font-family: var(--fh); }
 .question-block { display: none; }
@@ -731,7 +739,7 @@ section.in .stagger-child {
   font-size: 1rem; transition: all .2s; display: flex;
   justify-content: space-between; align-items: center; line-height: 1.4;
   cursor: pointer;
-  will-change: border-color, background, transform;
+  will-change: transform, background;
 }
 .option-btn:hover {
   border-color: rgba(255,255,255,0.35); background: rgba(255,255,255,0.04);
@@ -796,9 +804,8 @@ section.in .stagger-child {
   border-radius: 12px; padding: 36px 28px;
   display: flex; flex-direction: column;
   transition: all .3s var(--bz); position: relative; overflow: hidden;
-  will-change: border-color, transform, box-shadow;
+  will-change: transform, box-shadow;
   transform-style: preserve-3d;
-  perspective: 1000px;
 }
 .package-card.featured { border-color: rgba(255,255,255,0.25); background: rgba(20,20,20,0.9); }
 .package-card.featured::before {
@@ -816,7 +823,6 @@ section.in .stagger-child {
 .pkg-viewers {
   font-size: .75rem; color: var(--tm); margin-bottom: 10px;
   display: flex; align-items: center; gap: 5px;
-  will-change: contents;
 }
 .pkg-viewers .fire { color: #ff6b2b; }
 
@@ -831,7 +837,6 @@ section.in .stagger-child {
 .stock-bar {
   height: 100%; background: linear-gradient(90deg, #ff4444, #ff8844);
   border-radius: 2px; transition: width 1s;
-  will-change: width;
 }
 .stock-label { font-size: .72rem; color: #ff6b2b; font-family: var(--fh); font-weight: 600; letter-spacing: .04em; }
 
@@ -842,28 +847,25 @@ section.in .stagger-child {
   display: flex; align-items: center; gap: 8px; font-size: .78rem;
 }
 .pkg-countdown .cd-label { color: var(--tm); }
-.pkg-countdown .cd-timer { font-family: var(--fh); font-weight: 700; color: var(--tw); letter-spacing: .04em; will-change: contents; }
+.pkg-countdown .cd-timer { font-family: var(--fh); font-weight: 700; color: var(--tw); letter-spacing: .04em; }
 
 .package-name { font-size: 1.1rem; letter-spacing: -.01em; margin-bottom: 6px; }
 .package-price {
   font-size: 2rem; font-family: var(--fh); font-weight: 800; color: var(--tw);
   margin: 14px 0 4px; text-shadow: 0 0 20px rgba(255,255,255,0.15);
-  position: relative; cursor: help;
+  position: relative;
+  cursor: help;
 }
 .package-price::after {
   content: attr(data-tooltip);
-  position: absolute; bottom: -45px; left: 0; right: 0;
-  background: rgba(20,20,20,0.95); color: var(--tl);
-  padding: 8px 12px; border-radius: 6px; font-size: .75rem;
-  white-space: normal; opacity: 0; pointer-events: none;
-  transform: translateY(-10px); transition: opacity .3s, transform .3s;
-  border: 1px solid rgba(255,255,255,0.1);
-  z-index: 100;
-  width: 200px;
+  position: absolute; bottom: -50px; left: 0;
+  background: rgba(0,0,0,0.9); color: var(--tl); padding: 6px 12px;
+  border-radius: 4px; font-size: .7rem; white-space: nowrap;
+  opacity: 0; pointer-events: none; transition: opacity .3s;
+  z-index: 1000;
 }
-.package-card:hover .package-price::after {
+.package-price:hover::after {
   opacity: 1;
-  transform: translateY(0);
 }
 
 .package-reach { font-size: .82rem; color: var(--tm); margin-bottom: 8px; }
@@ -885,19 +887,7 @@ section.in .stagger-child {
   animation: slide-in .3s ease;
 }
 .package-btns { display: flex; gap: 10px; }
-.package-btns .btn {
-  flex: 1; padding: 13px 20px; font-size: .82rem;
-  transition: all .3s var(--bz);
-  will-change: transform;
-}
-.package-btns .btn:active {
-  animation: btn-pulse .2s ease-out;
-}
-@keyframes btn-pulse {
-  0%   { transform: scale(1); }
-  50%  { transform: scale(0.95); }
-  100% { transform: scale(1.05); }
-}
+.package-btns .btn { flex: 1; padding: 13px 20px; font-size: .82rem; }
 
 /* ══════════════════════════════════════════
    FAQ
@@ -911,13 +901,11 @@ section.in .stagger-child {
   display: flex; justify-content: space-between; align-items: center;
   gap: 20px; transition: all .3s; letter-spacing: -.01em; text-transform: none;
   cursor: pointer;
-  will-change: color, text-shadow, transform;
 }
 .faq-question:hover { color: var(--tw); text-shadow: 0 0 15px rgba(255,255,255,0.3); transform: translateX(6px); }
 .faq-icon {
   transition: transform .5s var(--bz); width: 22px; height: 22px;
   flex-shrink: 0; stroke: currentColor; fill: none; stroke-width: 2;
-  will-change: transform;
 }
 .faq-item.active .faq-icon { transform: rotate(180deg); filter: drop-shadow(0 0 5px #fff); }
 .faq-answer-wrap { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .5s var(--bz); }
@@ -952,11 +940,10 @@ section.in .stagger-child {
   -webkit-backdrop-filter: blur(24px); border-left: 1px solid rgba(255,255,255,0.08);
   z-index: 1000; padding: 40px; display: flex; flex-direction: column;
   transition: right .5s var(--bz); box-shadow: -30px 0 80px rgba(0,0,0,0.8);
-  will-change: right;
 }
 #cart.open { right: 0; }
 .cart-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 36px; }
-.cart-close { background: none; border: none; color: var(--tw); font-size: 2.2rem; line-height: 1; transition: transform .3s; cursor: pointer; will-change: transform; }
+.cart-close { background: none; border: none; color: var(--tw); font-size: 2.2rem; line-height: 1; transition: transform .3s; cursor: pointer; }
 .cart-close:hover { transform: rotate(90deg) scale(1.2); }
 .cart-items { flex-grow: 1; overflow-y: auto; padding-right: 8px; }
 .cart-items::-webkit-scrollbar { width: 4px; }
@@ -995,7 +982,6 @@ section.in .stagger-child {
   opacity: 0; transform: translateY(20px); transition: all .5s var(--bz);
   pointer-events: none; box-shadow: 0 10px 30px rgba(0,0,0,0.8);
   border: 1px solid rgba(255,255,255,0.15);
-  will-change: opacity, transform;
 }
 #sticky-cart.visible { opacity: 1; transform: translateY(0); pointer-events: auto; }
 
@@ -1016,7 +1002,7 @@ section.in .stagger-child {
 @keyframes modal-in { from{opacity:0;transform:scale(0.92) translateY(20px)} to{opacity:1;transform:scale(1) translateY(0)} }
 .modal-close {
   position: absolute; top: 20px; right: 20px; background: none; border: none;
-  color: var(--tw); font-size: 1.8rem; line-height: 1; transition: transform .3s; cursor: pointer; will-change: transform;
+  color: var(--tw); font-size: 1.8rem; line-height: 1; transition: transform .3s; cursor: pointer;
 }
 .modal-close:hover { transform: rotate(90deg); }
 .modal-box h2 { font-size: 1.5rem; margin-bottom: 28px; text-transform: none; letter-spacing: -.01em; }
@@ -1038,3 +1024,721 @@ footer .footer-brand {
   text-transform: uppercase; letter-spacing: -.02em; margin-bottom: 8px;
 }
 footer .footer-tagline { color: var(--tm); margin-bottom: 32px; font-size: .9rem; }
+footer .footer-links { display: flex; justify-content: center; gap: 30px; margin-bottom: 24px; flex-wrap: wrap; }
+footer .footer-links a { transition: color .2s; cursor: pointer; }
+footer .footer-links a:hover { color: var(--tw); }
+footer .footer-copy { color: rgba(255,255,255,0.2); font-size: .8rem; margin-top: 20px; }
+
+/* ══════════════════════════════════════════
+   RESPONSIVE
+═══════════════════════���══════════════════ */
+@media (max-width: 900px) { .about-grid { grid-template-columns: 1fr; gap: 16px; } }
+@media (max-width: 768px) {
+  section { padding: calc(var(--nav-h) + 60px) 20px 80px; }
+  .nav-links { display: none; }
+  .nav-cta.desktop { display: none; }
+  .hamburger { display: flex; }
+  #navbar { padding: 0 24px; }
+  .hero-stats { gap: 36px; }
+  .hero-stat-n { font-size: 1.6rem; }
+  .scale-track { flex-direction: column; gap: 16px; }
+  .scale-line { width: 2px; height: 85%; top: 8%; left: 50%; transform: translateX(-50%); }
+  .scale-dot { top: 10%; left: 50%; transform: translate(-50%, 0); transition: top .4s var(--bz); }
+  .survey-box { padding: 36px 22px; }
+  #cart { width: 100%; max-width: 100%; right: -100%; }
+  #cart.open { right: 0; }
+  .modal-box { padding: 32px 22px; }
+  .packages-grid { grid-template-columns: 1fr; }
+  .counter-box { gap: 40px; }
+  .diag-actions { flex-direction: column; }
+  .diag-actions .btn { width: 100%; justify-content: center; }
+}
+@media (max-width: 480px) {
+  .hero-btns { flex-direction: column; align-items: center; }
+  .hero-btns .btn { width: 100%; max-width: 320px; justify-content: center; }
+  .scale-letter { width: 58px; height: 58px; font-size: 1.6rem; }
+  .results-grid { grid-template-columns: 1fr; }
+}
+
+/* ══════════════════════════════════════════
+   ACCESSIBILITY
+══════════════════════════════════════════ */
+.sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0;
+  margin: -1px; overflow: hidden; clip: rect(0,0,0,0); border: 0;
+}
+:focus-visible { outline: 2px solid rgba(255,255,255,0.6); outline-offset: 3px; border-radius: 3px; }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+}
+</style>
+</head>
+<body>
+
+<!-- CURSOR GLOW SUTIL -->
+<div id="cursor-glow" aria-hidden="true"></div>
+
+<!-- PARTICLE CANVAS -->
+<canvas id="particle-canvas" aria-hidden="true"></canvas>
+
+<!-- STAR FIELD - 3 layers -->
+<div id="star-field" aria-hidden="true"></div>
+
+<!-- Grid parallax -->
+<div id="grid" aria-hidden="true"></div>
+
+<!-- Section color overlay -->
+<div id="section-overlay" aria-hidden="true"></div>
+
+<!-- Toast container -->
+<div id="toast-container" aria-live="polite" aria-label="Notificaciones"></div>
+
+<!-- Data notification -->
+<div id="data-notif" aria-hidden="true" aria-label="Dato de marketing digital">
+  <span id="data-notif-text">📈 El 73% de los consumidores compra después de ver un video corto</span>
+</div>
+
+<!-- ══ NAVBAR ══ -->
+<nav id="navbar" role="navigation" aria-label="Navegación principal">
+  <a href="#hero" class="nav-logo" aria-label="Kovex Agency - Inicio">KOVEX<span>.</span></a>
+  <div class="nav-links" role="menubar">
+    <a href="#about"    role="menuitem">Nosotros</a>
+    <a href="#scale"    role="menuitem">Método</a>
+    <a href="#results"  role="menuitem">Resultados</a>
+    <a href="#packages" role="menuitem">Paquetes</a>
+    <a href="#faq"      role="menuitem">FAQ</a>
+  </div>
+  <a href="#" onclick="wa(); return false;" class="nav-cta desktop" aria-label="Contactar por WhatsApp">WhatsApp →</a>
+  <button class="hamburger" id="hamburger" aria-label="Abrir menú" aria-expanded="false" aria-controls="nav-drawer">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<nav id="nav-drawer" aria-label="Menú móvil" aria-hidden="true">
+  <a href="#about"    onclick="closeDrawer()">Nosotros</a>
+  <a href="#scale"    onclick="closeDrawer()">Método SCALE</a>
+  <a href="#results"  onclick="closeDrawer()">Resultados</a>
+  <a href="#survey"   onclick="closeDrawer()">Diagnóstico</a>
+  <a href="#packages" onclick="closeDrawer()">Paquetes</a>
+  <a href="#faq"      onclick="closeDrawer()">FAQ</a>
+  <a href="#" onclick="wa(); closeDrawer(); return false;" style="color:var(--tw);margin-top:10px;">Contactar por WhatsApp →</a>
+</nav>
+
+<!-- ══ HERO ══ -->
+<section id="hero" aria-label="Inicio">
+  <div class="container">
+    <div class="hero-badge" aria-label="Resultados generados">
+      +2.3M reproducciones · +15K interacciones · +847 seguidores reales
+    </div>
+    <h1 class="hero-title" id="hero-title">
+      Crecimiento Real,<br>No Seguidores Vacíos
+    </h1>
+    <p>En KOVEX construimos presencia digital que convierte visitas en clientes, reproducciones en pedidos, y seguidores en ventas reales. Sin humo, sin promesas vacías.</p>
+    <div class="hero-btns">
+      <button class="btn" onclick="scrollTo('survey')" aria-label="Ir al diagnóstico gratuito">Diagnóstico gratis →</button>
+      <button class="btn btn-outline" onclick="scrollTo('scale')" aria-label="Conocer el método SCALE">Conoce el método</button>
+    </div>
+    <div class="hero-stats" role="list" aria-label="Estadísticas">
+      <div class="hero-stat" role="listitem"><span class="hero-stat-n">+2.3M</span><span class="hero-stat-l">Reproducciones</span></div>
+      <div class="hero-stat" role="listitem"><span class="hero-stat-n">+847</span><span class="hero-stat-l">Seguidores reales</span></div>
+      <div class="hero-stat" role="listitem"><span class="hero-stat-n">+30%</span><span class="hero-stat-l">Más consultas</span></div>
+      <div class="hero-stat" role="listitem"><span class="hero-stat-n">4 días</span><span class="hero-stat-l">Para ver resultados</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ ABOUT ══ -->
+<section id="about" aria-label="Sobre Kovex Agency">
+  <div class="container">
+    <h2 style="text-align:center" class="stagger-child" style="--si:0s">Somos KOVEX</h2>
+    <p class="stagger-child" style="--si:.1s;text-align:center;max-width:780px;margin:24px auto 0;font-size:1.1rem;line-height:1.75;color:var(--tl)">
+      No creemos en los seguidores inflados ni en los trends que no tienen nada que ver con tu negocio. Creemos en marcas con alma, con consistencia, con contenido que conecta de verdad con quien tiene la billetera lista para comprarte. Somos el equipo que transforma la improvisación en resultados medibles.
+    </p>
+    <div class="about-grid">
+      <div class="about-card stagger-child" style="--si:.15s">
+        <svg class="about-card-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
+        <h3>Estrategia, no improvisación</h3>
+        <p>Cada pieza de contenido tiene un propósito. Antes de crear, analizamos a tu cliente, tu competencia y tu mercado para definir exactamente qué decir y cómo decirlo.</p>
+      </div>
+      <div class="about-card stagger-child" style="--si:.25s">
+        <svg class="about-card-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>
+        <h3>Resultados medibles</h3>
+        <p>Nada de "likes bonitos". Te entregamos dashboards con datos reales: alcance, interacciones, clicks, consultas generadas y retorno sobre inversión publicitaria.</p>
+      </div>
+      <div class="about-card stagger-child" style="--si:.35s">
+        <svg class="about-card-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+        <h3>Equipo comprometido</h3>
+        <p>No eres un cliente más en una cartera de 50. Te asignamos un equipo dedicado que aprende tu negocio, tu tono y tus objetivos desde el primer día.</p>
+      </div>
+    </div>
+    <div class="counter-box stagger-child" style="--si:.45s" role="list" aria-label="Números de Kovex Agency">
+      <div class="counter-item" role="listitem"><span class="counter-num" id="cnt-brands">0</span><div class="counter-label">Marcas transformadas</div></div>
+      <div class="counter-item" role="listitem"><span class="counter-num" id="cnt-repro">0</span><div class="counter-label">Reproducciones generadas</div></div>
+      <div class="counter-item" role="listitem"><span class="counter-num" id="cnt-years">0</span><div class="counter-label">Años de experiencia</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ PAIN POINTS ══ -->
+<section id="pain" aria-label="Problemas comunes en marketing digital">
+  <div class="container">
+    <div class="pain-intro stagger-child" style="--si:0s">
+      <h2>¿Te identificas?</h2>
+      <p>Si alguna de estas situaciones describe tu negocio hoy, estás en el lugar correcto.</p>
+    </div>
+    <div id="pain-list" role="list" aria-label="Síntomas de una estrategia digital sin rumbo"></div>
+  </div>
+</section>
+
+<!-- ══ MÉTODO SCALE ══ -->
+<section id="scale" aria-label="Método SCALE de Kovex Agency">
+  <div class="container">
+    <h2 class="stagger-child" style="--si:0s">El Método SCALE</h2>
+    <p class="scale-subtitle stagger-child" style="--si:.1s">Nuestro sistema probado en 5 fases para transformar tu presencia digital.</p>
+    <div class="scale-track stagger-child" style="--si:.2s" id="scale-track" role="tablist" aria-label="Fases del método SCALE">
+      <div class="scale-line" aria-hidden="true"></div>
+      <div class="scale-dot" id="scale-dot" aria-hidden="true"></div>
+      <div class="scale-letter" role="tab" aria-selected="false" aria-controls="scale-display" data-letter="S" data-index="0" tabindex="0"><span>S</span></div>
+      <div class="scale-letter" role="tab" aria-selected="false" data-letter="C" data-index="1" tabindex="0"><span>C</span></div>
+      <div class="scale-letter" role="tab" aria-selected="false" data-letter="A" data-index="2" tabindex="0">
+        <span>A</span>
+        <svg class="rocket-icon" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.5" aria-hidden="true">
+          <path d="M12 2C12 2 8 6 8 12C8 16 6 19 6 19L10 19L10 22L12 24L14 22L14 19L18 19C18 19 16 16 16 12C16 6 12 2 12 2Z" fill="rgba(255,255,255,0.15)"/>
+          <circle cx="12" cy="10" r="2" fill="#fff"/>
+          <path d="M10 22L12 24L14 22" stroke="#ff4444" stroke-width="2"/>
+        </svg>
+      </div>
+      <div class="scale-letter" role="tab" aria-selected="false" data-letter="L" data-index="3" tabindex="0"><span>L</span></div>
+      <div class="scale-letter" role="tab" aria-selected="false" data-letter="E" data-index="4" tabindex="0"><span>E</span></div>
+    </div>
+    <div class="scale-display stagger-child" style="--si:.3s" id="scale-display" role="tabpanel" aria-live="polite">
+      <div class="scale-display-inner" style="color:var(--tm)">Haz clic en cualquier letra para descubrir cada fase de nuestra metodología.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ RESULTADOS ══ -->
+<section id="results" aria-label="Casos de éxito de Kovex Agency">
+  <div class="container">
+    <h2 class="stagger-child" style="--si:0s">Resultados Reales</h2>
+    <p class="results-intro stagger-child" style="--si:.1s">No prometemos, demostramos. Estos son algunos de los resultados generados para nuestros clientes en Cartago y el Valle del Cauca.</p>
+    <div class="results-grid" id="results-grid"></div>
+  </div>
+</section>
+
+<!-- ══ DIAGNÓSTICO ══ -->
+<section id="survey" aria-label="Diagnóstico digital gratuito">
+  <div class="container">
+    <div class="survey-box">
+      <div class="survey-header">
+        <h2>Diagnóstico Profundo</h2>
+        <p>6 preguntas clave para generar un análisis estratégico real y personalizado para tu negocio.</p>
+      </div>
+      <div class="progress-wrap">
+        <div class="progress-track" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="progress-bar-wrap">
+          <div class="progress-bar" id="progress-bar"></div>
+        </div>
+        <div class="progress-label" id="progress-label">Pregunta 1 de 6</div>
+      </div>
+      <div id="survey-questions"></div>
+      <div class="survey-actions">
+        <button class="btn" id="btn-diag" style="display:none" onclick="generateDiag()" aria-label="Generar mi diagnóstico personalizado">
+          Generar mi diagnóstico →
+        </button>
+      </div>
+      <div id="diag-result" role="region" aria-live="polite" aria-label="Resultado del diagnóstico">
+        <div class="diag-profile" id="diag-profile-tag"></div>
+        <h3 id="diag-title"></h3>
+        <p id="diag-text"></p>
+        <div class="diag-actions">
+          <button class="btn" onclick="scrollTo('packages')" aria-label="Ver paquetes recomendados">Ver paquetes recomendados →</button>
+          <button class="btn btn-outline" onclick="wa()" aria-label="Hablar con un estratega por WhatsApp">Hablar con un estratega</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ PAQUETES ══ -->
+<section id="packages" aria-label="Paquetes y servicios de Kovex Agency">
+  <div class="container">
+    <h2 style="text-align:center" class="stagger-child" style="--si:0s">Nuestros Paquetes</h2>
+    <p class="packages-intro stagger-child" style="--si:.1s">Soluciones escalables para cada etapa de tu negocio. Sin contratos largos, sin letras pequeñas.</p>
+    <div class="packages-grid" id="packages-grid"></div>
+  </div>
+</section>
+
+<!-- ══ FAQ ══ -->
+<section id="faq" aria-label="Preguntas frecuentes">
+  <div class="container">
+    <h2 style="text-align:center" class="stagger-child" style="--si:0s">Preguntas Frecuentes</h2>
+    <div class="faq-list" id="faq-list" role="list"></div>
+  </div>
+</section>
+
+<!-- ══ CTA ══ -->
+<section id="cta" aria-label="Llamada a la acción final">
+  <div class="container">
+    <h2 class="stagger-child" style="--si:0s">Deja de apostar.<br>Empieza a construir.</h2>
+    <p class="cta-sub stagger-child" style="--si:.1s">
+      Cuéntanos sobre tu negocio. En 30 minutos identificamos al menos 3 oportunidades concretas de crecimiento, o el tiempo corre por nuestra cuenta.
+    </p>
+    <button class="btn hover-card stagger-child" style="--si:.2s;font-size:1.05rem;padding:20px 44px" onclick="wa()" aria-label="Solicitar diagnóstico gratuito por WhatsApp">
+      Solicita tu diagnóstico sin compromiso →
+    </button>
+    <p class="cta-guarantee stagger-child" style="--si:.3s">
+      Si en 30 minutos no identificamos al menos 3 oportunidades reales para tu negocio, no hay cobro ni compromiso.
+    </p>
+  </div>
+</section>
+
+<!-- ══ FOOTER ══ -->
+<footer role="contentinfo">
+  <div class="container">
+    <div class="footer-brand">KOVEX AGENCY</div>
+    <div class="footer-tagline">Arquitectura de Crecimiento Digital</div>
+    <nav class="footer-links" aria-label="Links del footer">
+      <a href="#about">Nosotros</a>
+      <a href="#scale">Método</a>
+      <a href="#results">Resultados</a>
+      <a href="#packages">Paquetes</a>
+      <a href="#faq">FAQ</a>
+      <a href="#" onclick="openModal('terms'); return false;">Términos y condiciones</a>
+      <a href="#" onclick="openModal('privacy'); return false;">Política de privacidad</a>
+    </nav>
+    <p style="margin-bottom:8px">
+      Cartago, Valle del Cauca, Colombia &nbsp;·&nbsp;
+      <a href="tel:+573133853506" style="transition:color .2s" onmouseover="this.style.color='#fff'" onmouseout="this.style.color=''" aria-label="Llamar a Kovex Agency">+57 313 385 3506</a>
+      &nbsp;·&nbsp;
+      <a href="mailto:hola@kovexagency.com" style="transition:color .2s" onmouseover="this.style.color='#fff'" onmouseout="this.style.color=''" aria-label="Enviar email a Kovex Agency">hola@kovexagency.com</a>
+    </p>
+    <p>CEO: Nicol Montoya</p>
+    <p class="footer-copy">© 2026 Kovex Agency. Todos los derechos reservados.</p>
+  </div>
+</footer>
+
+<!-- ══ CARRITO ══ -->
+<aside id="cart" role="complementary" aria-label="Carrito de selección" aria-hidden="true">
+  <div class="cart-header">
+    <h3 style="font-size:1.4rem">Tu Selección</h3>
+    <button class="cart-close" onclick="toggleCart()" aria-label="Cerrar carrito">×</button>
+  </div>
+  <div class="cart-items" id="cart-items" role="list"></div>
+  <div class="cart-footer">
+    <label class="cart-discount-label">
+      <input type="checkbox" id="discount-check" onchange="updateCart()" aria-label="Aplicar descuento del 20% para primera compra">
+      <span>Aplicar 20% de descuento (primera compra)</span>
+    </label>
+    <div class="cart-total">
+      <span class="cart-total-label">Total estimado:</span>
+      <div>
+        <span class="cart-total-value" id="cart-total-value">$0</span>
+        <span class="cart-total-original" id="cart-total-original" style="display:none"></span>
+      </div>
+    </div>
+    <button class="btn" style="width:100%;font-size:1rem;padding:18px" onclick="wa()" aria-label="Completar solicitud por WhatsApp">
+      Completar solicitud por WhatsApp →
+    </button>
+  </div>
+</aside>
+
+<button class="btn" id="sticky-cart" onclick="toggleCart()" aria-label="Ver carrito" aria-live="polite">
+  🛒 Ver carrito (<span id="cart-count">0</span>)
+</button>
+
+<!-- ══ MODAL LEGAL ══ -->
+<div id="modal-overlay" role="dialog" aria-modal="true" aria-label="Información legal" onclick="if(event.target===this)closeModal()">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal()" aria-label="Cerrar">×</button>
+    <div id="modal-content"></div>
+  </div>
+</div>
+
+<script>
+/* ══════════════════════════════════════════
+   DATOS DE CONTENIDO
+═══════════════════════════════════════════ */
+const WHATSAPP = '573133853506';
+
+// Page Visibility API para pausar animaciones
+let isPageVisible = true;
+let animationFrameId = null;
+
+document.addEventListener('visibilitychange', () => {
+  isPageVisible = !document.hidden;
+});
+
+const painPoints = [
+  { icon: '<path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>', text: 'Publicas constantemente pero los pedidos no llegan. El esfuerzo no se traduce en ventas.' },
+  { icon: '<path d="M13 17h8m0 0V9m0 8l-8-8-4 4-6-6"/>', text: 'Te subes a trends virales sin relación con tu negocio. Suma reproducciones, pero nadie escribe.' },
+  { icon: '<path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/>', text: 'Tienes seguidores que no interactúan ni compran, y no sabes por qué tu comunidad está muerta.' },
+  { icon: '<path d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636"/>', text: 'Sin estrategia clara, las redes son ruido costoso que no llena la caja registradora.' }
+];
+
+const scaleData = [
+  { letter: 'S', title: 'Strategy — Diagnóstico y Mapa de Ruta', desc: 'Analizamos a tu cliente ideal en profundidad: qué le duele, qué desea, cómo decide, dónde está. Definimos los mensajes exactos que lo mueven a la acción y el canal donde tiene más sentido encontrarlo. Sin estrategia, el contenido más bonito es ruido.' },
+  { letter: 'C', title: 'Content — Producción que Conecta', desc: 'Creamos piezas visuales y textuales que no solo se ven bien, sino que generan acción inmediata. Guiones con hooks potentes, edición dinámica, gráficas con identidad. Cada pieza tiene un objetivo claro: vender, generar consulta o construir confianza.' },
+  { letter: 'A', title: 'Activation — Lanzamiento y Distribución', desc: 'Lanzamos campañas de alto impacto que llevan tu contenido a quienes realmente quieren comprarte. Meta Ads, distribución orgánica estratégica, colaboraciones y timing preciso para maximizar el alcance en el momento correcto.' },
+  { letter: 'L', title: 'Learning — Datos, No Suposiciones', desc: 'Medimos absolutamente todo: cada click, cada reproducción, cada consulta. Identificamos qué funciona, qué no y por qué. Los datos guían cada decisión para que tu inversión sea cada vez más eficiente y predecible.' },
+  { letter: 'E', title: 'Expansion — Escalar lo que Funciona', desc: 'Una vez identificadas las palancas de crecimiento, las amplificamos. Aumentamos presupuesto en lo que convierte, replicamos formatos ganadores y abrimos nuevos canales. El objetivo es convertir tus redes en un activo que crece solo.' }
+];
+
+const resultsData = [
+  { tag: 'Caso de éxito', icon: '<path d="M2 20h20M5 20V10a2 2 0 012-2h2a2 2 0 012 2v10m4 0V4a2 2 0 012-2h2a2 2 0 012 2v16"/>', title: 'Origen Café', desc: 'Video promocional de tostones con Meta Ads. Inversión de $20.000 COP. En tan solo 4 días el negocio recibió 30 pedidos por WhatsApp, 10 visitas al local y más de 15.000 reproducciones orgánicas adicionales.', metrics: [{n:'$20K',l:'Inversión en Ads'},{n:'+15K',l:'Reproducciones'},{n:'30',l:'Pedidos WhatsApp'},{n:'4 días',l:'Para ver resultados'}], path: 'M0,35 Q20,35 30,20 T60,25 T100,5' },
+  { tag: 'Branding desde cero', icon: '<path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>', title: 'Vanessa Puccini', desc: 'Creación de marca desde cero: logo, branding completo, piezas gráficas, gestión de redes y contenido estratégico alineado con su cliente ideal. El primer mes cerró con un 30% más de consultas y reconocimiento notorio en su zona.', metrics: [{n:'+30%',l:'Más consultas'},{n:'1 mes',l:'Para ver resultados'},{n:'100%',l:'Branding creado'}], path: 'M0,30 L20,25 L40,30 L60,15 L80,20 L100,0' },
+  { tag: 'Estrategia integral', icon: '<path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2v10z"/>', title: 'Álamos Gastropub', desc: 'Reestructuración integral: nuevo branding, menú digital, contenidos madre, administración de redes, historias destacadas y sistema de reservas. Resultado: mayor fidelización, aumento sostenido de visitas y comunidad activa.', metrics: [{n:'+40%',l:'Fidelización'},{n:'Menú',l:'Digital creado'},{n:'100%',l:'Redes administradas'}], path: 'M0,35 C30,35 40,10 60,20 S80,0 100,5' }
+];
+
+// NUEVA ENCUESTA: 6 preguntas clave
+const surveyQuestions = [
+  { q: '¿Cuál es tu principal objetivo con el marketing digital?', o: ['Vender más (conversiones directas)', 'Dar a conocer mi marca (reconocimiento)', 'Captar leads o contactos', 'Fidelizar clientes actuales'] },
+  { q: '¿Con qué frecuencia publicas contenido actualmente?', o: ['Todos los días', '3-5 veces por semana', '1-2 veces por semana', 'Esporádicamente / Sin frecuencia'] },
+  { q: '¿Has invertido en publicidad pagada (Meta Ads, Google Ads, etc.)?', o: ['Sí, con buenos resultados', 'Sí, pero no funcionó como esperaba', 'No, pero quiero empezar', 'No, y no sé por dónde empezar'] },
+  { q: '¿Cuál es tu mayor obstáculo para crecer en redes?', o: ['Crear contenido atractivo y constante', 'Entender qué funciona (métricas)', 'Falta de tiempo o equipo', 'Presupuesto limitado para publicidad'] },
+  { q: '¿Cuál es el ticket promedio de tus clientes?', o: ['Bajo ($10.000 - $50.000 COP)', 'Medio ($50.000 - $200.000 COP)', 'Alto ($200.000 - $1.000.000 COP)', 'Premium (más de $1.000.000 COP)'] },
+  { q: '¿Qué tipo de negocio tienes?', o: ['Producto físico (ecommerce/retail)', 'Servicio profesional o consultoría', 'Restaurante / Local físico', 'Marca personal / Infoproductos'] }
+];
+
+const diagProfiles = [
+  { tag: 'Perfil: Marca en Construcción', title: 'Tu base es sólida — pero aún sin sistema que convierta.', text: 'Tienes energía y compromiso con tu marca, y eso ya es mucho. Lo que falta es un sistema que transforme ese esfuerzo en resultados predecibles. Tu contenido necesita una estrategia de comunicación clara dirigida a tu cliente ideal, un calendario editorial con propósito, y distribución inteligente que amplíe tu alcance más allá de tus seguidores actuales.<br><br><strong>Próximo paso recomendado:</strong> Comienza con un paquete de contenido estratégico (Impact Reels o Amplify Reach) para establecer presencia y ritmo. En 60 días tendrás una base sólida desde donde escalar.' },
+  { tag: 'Perfil: Marca Estancada', title: 'Estás publicando, pero el algoritmo no te está ayudando.', text: 'Has invertido tiempo y tal vez dinero, pero los resultados no justifican el esfuerzo. El problema suele estar en uno de tres puntos: el contenido no conecta emocionalmente con quien debe comprar, la distribución no está optimizada, o estás midiendo las métricas equivocadas (likes en lugar de consultas).<br><br><strong>Próximo paso recomendado:</strong> Necesitas una auditoría primero (Optimize 360) para identificar exactamente qué está fallando, seguida de una estrategia de contenido renovada. No sirve crear más de lo mismo.' },
+  { tag: 'Perfil: Marca con Potencial', title: 'Tienes un producto valioso — falta el sistema que lo haga visible.', text: 'Tu negocio tiene bases reales: ticket de venta, clientes satisfechos, propuesta de valor clara. Lo que te falta es la infraestructura digital que comunique ese valor a escala. La buena noticia: marcas con tu perfil generalmente ven resultados rápidos una vez que se implementa la estrategia correcta, porque el producto ya está validado.<br><br><strong>Próximo paso recomendado:</strong> Un paquete integral (Power Reach o Scale Pro) que combine producción de contenido de alto impacto con pauta publicitaria dirigida. El ROI es predecible cuando la base es sólida.' },
+  { tag: 'Perfil: Marca Lista para Escalar', title: 'Ya tienes resultados — es momento de multiplicarlos.', text: 'Tienes presencia digital establecida, has experimentado con publicidad y entiendes que el contenido importa. Estás listo para pasar al siguiente nivel: sistemas de crecimiento predecibles, campañas optimizadas por datos y una presencia que genere autoridad en tu nicho, no solo visibilidad.<br><br><strong>Próximo paso recomendado:</strong> Scale Pro es el paquete diseñado exactamente para ti. Combinamos producción premium, pauta estratégica y seguimiento mensual de métricas para que el crecimiento sea sostenido y escalable.' }
+];
+
+const packagesData = [
+  { id: 1, name: 'Scale Pro', price: 1500000, reach: '+300K reproducciones/mes', roi: 'Clientes como Origen Café recuperaron su inversión en 4 días con una fracción de este presupuesto.', features: ['10 reels multiformato','15 piezas gráficas premium','Sesión fotográfica (2h)','Manejo activo de comunidad','Dashboard de métricas mensual','Estrategia editorial completa'], desc: 'El sistema definitivo para dominar tu nicho. Producción constante, pauta y seguimiento de datos para escalar facturación mes a mes.', featured: true, hasCountdown: true, stockPct: 30 },
+  { id: 2, name: 'Web Premium', price: 250000, reach: '+4.000 visitas/mes estimadas', roi: 'Tu presencia digital abierta 24/7, diseñada para convertir visitantes en clientes que llaman.', features: ['Página web profesional (5 secciones)','Optimización SEO local','Contenido estratégico de cada sección','Formulario de contacto integrado','Diseño adaptado a mobile'], desc: 'Tu sucursal digital siempre activa, diseñada para posicionarte en Google y convertir.', featured: false, stockPct: 60 },
+  { id: 3, name: 'Power Reach', price: 1000000, reach: '200K–300K reproducciones', roi: 'Alcance masivo con producción de alto impacto. Ideal para lanzamientos y temporadas clave.', features: ['4 reels multiformato','1 video premium (60 segundos)','8 piezas gráficas','Copywriting estratégico','Distribución optimizada'], desc: 'Impacto máximo en un mes. Producción de alta calidad para marcar diferencia en tu categoría.', featured: false },
+  { id: 4, name: 'Amplify Reach', price: 600000, reach: '100K–150K reproducciones', roi: 'El equilibrio perfecto: calidad y frecuencia para crecer de forma sostenida sin presupuesto exagerado.', features: ['3 reels multiformato','1 video premium','6 piezas gráficas','Copywriting incluido'], desc: 'Crecimiento consistente con el balance ideal entre inversión y resultado visible.', featured: false },
+  { id: 5, name: 'Impact Reels', price: 250000, reach: '30K–60K reproducciones', roi: 'El formato más potente para generar alcance orgánico rápido con bajo presupuesto.', features: ['3 reels estratégicos','Guiones basados en tendencias reales','Edición dinámica profesional','Hooks optimizados para retención'], desc: 'Formato corto optimizado para viralidad. Ideal para comenzar a construir audiencia real.', featured: false, stockPct: 45 },
+  { id: 6, name: 'Brand Precision', price: 150000, reach: 'Identidad sólida y memorable', roi: 'Una identidad visual fuerte eleva la percepción de calidad y justifica precios más altos.', features: ['6 piezas gráficas de alto nivel','Refinamiento de logo existente','Paleta de colores y tipografía','Manual de uso básico'], desc: 'Eleva la percepción de tu marca con diseño impecable y coherente en todos los canales.', featured: false },
+  { id: 7, name: 'Optimize 360', price: 100000, reach: 'Claridad estratégica total', roi: 'Descubre exactamente qué está fallando antes de seguir invirtiendo en la dirección equivocada.', features: ['Auditoría completa de redes','Análisis de métricas actuales','Benchmarking vs competencia','Plan de mejora ejecutable con pasos concretos'], desc: 'Tu mapa de ruta. Identifica qué falla y cómo solucionarlo con datos reales, no suposiciones.', featured: false }
+];
+
+const faqData = [
+  { q: '¿Cuánto tiempo tardan en verse resultados reales?', a: 'Depende del servicio, pero en general en las primeras <strong>2 a 3 semanas</strong> ya empiezas a ver cambios notables en alcance e interacciones. Con pauta publicitaria (Meta Ads), los primeros resultados pueden llegar en 4 a 7 días, como ocurrió con Origen Café. Los resultados sostenidos y el crecimiento real de audiencia se consolidan entre el primer y segundo mes de trabajo consistente.' },
+  { q: '¿Necesito tener muchos seguidores para empezar?', a: 'No, para nada. De hecho, muchas marcas empiezan con nosotros desde <strong>cero seguidores</strong>. Nuestro enfoque es construir una comunidad real y comprometida, no inflar números que no se convierten en ventas. Una cuenta con 500 seguidores que compran es infinitamente más valiosa que 10.000 que solo dan like.' },
+  { q: '¿Qué diferencia a KOVEX de otras agencias?', a: 'Tres cosas fundamentales: primero, <strong>obsesión por los datos</strong> — cada decisión se toma en base a métricas reales, no intuición. Segundo, <strong>enfoque en conversiones</strong>, no en vanity metrics como likes o views. Tercero, <strong>equipo dedicado</strong> que aprende tu negocio a fondo. No somos una fábrica de contenido; somos socios estratégicos.' },
+  { q: '¿Cuánto debo invertir en publicidad además del paquete?', a: 'Depende de tus objetivos y tu mercado. Para comenzar a ver resultados con Meta Ads en Cartago y el Valle, recomendamos una <strong>inversión mínima de $30.000 a $50.000 COP diarios</strong> (aproximadamente $15–25 USD al mes). Con ese presupuesto manejado estratégicamente, hemos logrado alcances de +15.000 personas por campaña.' },
+  { q: '¿Puedo contratar un paquete y luego escalarlo?', a: 'Absolutamente. Nuestros paquetes están diseñados para escalar con tu negocio. Muchos clientes comienzan con <strong>Impact Reels o Amplify Reach</strong> para validar el mercado, y una vez que ven resultados pasan a Scale Pro. No hay contratos de permanencia ni penalidades por cambiar de plan.' },
+  { q: '¿Trabajan con negocios fuera de Cartago?', a: 'Sí. Aunque estamos basados en Cartago, Valle del Cauca, trabajamos con clientes en toda Colombia y algunos mercados en Latinoamérica. Todo el proceso de estrategia, producción y comunicación es <strong>100% remoto</strong>. Solo la sesión fotográfica presencial requiere un acuerdo de desplazamiento.' }
+];
+
+const legalContent = {
+  terms: `
+    <h2>Términos y Condiciones de Uso</h2>
+    <p>Última actualización: enero de 2026</p>
+    <p>El presente sitio web es operado por <strong>Kovex Agency</strong>, con domicilio en Cartago, Valle del Cauca, Colombia. Al acceder o utilizar este sitio, usted acepta los presentes Términos y Condiciones.</p>
+    <h3>1. Uso del sitio</h3>
+    <p>Este sitio tiene carácter informativo y comercial. El uso indebido del contenido, la reproducción parcial o total sin autorización, o cualquier actividad contraria a las leyes colombianas queda expresamente prohibido.</p>
+    <h3>2. Servicios</h3>
+    <p>La Agencia ofrece servicios de marketing digital, gestión de redes sociales, producción de contenido, diseño gráfico y publicidad digital. El alcance exacto de cada servicio se detalla en la propuesta comercial acordada por escrito.</p>
+    <h3>3. Pagos y facturación</h3>
+    <p>Los pagos se realizan por adelantado al inicio de cada período de servicio. Los precios publicados están expresados en pesos colombianos (COP) e incluyen el IVA cuando aplica. La Agencia emite factura electrónica conforme a la normativa colombiana.</p>
+    <h3>4. Propiedad del contenido</h3>
+    <p>Una vez realizado el pago completo, el cliente tiene derechos de uso sobre el contenido producido por la Agencia para su marca. La Agencia conserva el derecho de incluir el trabajo en su portafolio salvo indicación expresa del cliente.</p>
+    <h3>5. Confidencialidad</h3>
+    <p>La Agencia se compromete a mantener confidencial toda la información del cliente. El cliente otorga acceso a sus plataformas digitales únicamente para los fines del servicio contratado.</p>
+    <h3>6. Ley aplicable</h3>
+    <p>Estos términos se rigen por las leyes de la República de Colombia. Cualquier disputa será resuelta ante los tribunales competentes de Cartago, Valle del Cauca.</p>
+  `,
+  privacy: `
+    <h2>Política de Privacidad y Tratamiento de Datos Personales</h2>
+    <p>Última actualización: enero de 2026</p>
+    <p>En cumplimiento de la <strong>Ley 1581 de 2012</strong> y el Decreto 1377 de 2013 sobre Protección de Datos Personales en Colombia, Kovex Agency informa sobre el tratamiento de los datos recopilados a través de este sitio web.</p>
+    <h3>Responsable del tratamiento</h3>
+    <p><strong>Kovex Agency</strong> — Nicol Montoya, CEO<br>Cartago, Valle del Cauca, Colombia<br>Contacto: hola@kovexagency.com · +57 313 385 3506</p>
+    <h3>Datos que recopilamos</h3>
+    <ul>
+      <li>Nombre y datos de contacto proporcionados voluntariamente.</li>
+      <li>Respuestas al diagnóstico de marketing (uso interno para personalización).</li>
+      <li>Información de navegación básica (sin cookies de seguimiento de terceros).</li>
+    </ul>
+    <h3>Finalidad del tratamiento</h3>
+    <ul>
+      <li>Contactar al usuario para ofrecer el diagnóstico gratuito solicitado.</li>
+      <li>Personalizar la propuesta de servicios según el perfil del negocio.</li>
+      <li>Enviar información comercial relevante (con posibilidad de cancelar en cualquier momento).</li>
+    </ul>
+    <h3>Derechos del titular</h3>
+    <p>Conforme a la Ley 1581 de 2012, usted tiene derecho a conocer, actualizar, rectificar y suprimir sus datos personales. Para ejercer estos derechos, escriba a <strong>hola@kovexagency.com</strong> indicando su solicitud.</p>
+    <h3>Conservación de datos</h3>
+    <p>Los datos se conservan durante el tiempo necesario para prestar el servicio y cumplir obligaciones legales, y no se comparten con terceros sin autorización expresa del titular.</p>
+  `
+};
+
+// Datos de marketing para el notification rotativo
+const marketingData = [
+  '📈 El 73% de los consumidores compra después de ver un video corto',
+  '🔥 Meta Ads: el ROI promedio en Colombia es del 280%',
+  '🎯 Los Reels generan un 40% más de engagement que las imágenes fijas',
+  '⏱️ El 60% de los usuarios decide en los primeros 5 segundos',
+  '💡 Las marcas que publican 3+ veces por semana crecen 2x más rápido',
+  '📱 El 89% del tiempo en redes se consume en mobile',
+  '🎬 Los videos en Reels tienen 67% más probabilidad de viralizar',
+  '💰 El video marketing aumenta conversiones hasta un 80%',
+  '✨ El storytelling visual genera 1200% más shares que texto + imagen',
+  '🚀 TikTok llega a 1.5B usuarios activos mensuales en el mundo'
+];
+
+/* ══════════════════════════════════════════
+   UTILIDADES
+═══════════════════════════════════════════ */
+const $ = id => document.getElementById(id);
+const fmt = n => '$' + n.toLocaleString('es-CO') + ' COP';
+const scrollTo = id => document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+const wa = () => {
+  let msg = 'Hola KOVEX, me interesa un diagnóstico estratégico para mi negocio.';
+  if (cart.length > 0) {
+    msg = 'Hola KOVEX, me interesan estos paquetes:\n' + cart.map(p => '• ' + p.name).join('\n');
+    if ($('discount-check').checked) msg += '\n\n(Aplicando 20% de descuento primera compra)';
+    msg += '\nTotal estimado: ' + $('cart-total-value').textContent;
+  }
+  window.open('https://wa.me/' + WHATSAPP + '?text=' + encodeURIComponent(msg), '_blank');
+};
+
+/* ══════════════════════════════════════════
+   CURSOR GLOW (solo glow sutil, sin dot/ring)
+═══════════════════════════════════════════ */
+const cursorGlow = $('cursor-glow');
+let mouseX = 0, mouseY = 0;
+
+document.addEventListener('mousemove', e => {
+  mouseX = e.clientX;
+  mouseY = e.clientY;
+  if (cursorGlow && isPageVisible) {
+    cursorGlow.style.left = mouseX + 'px';
+    cursorGlow.style.top = mouseY + 'px';
+  }
+}, { passive: true });
+
+/* ══════════════════���═══════════════════════
+   STAR FIELD – 3 capas con parallax mouse
+═══════════════════════════════════════════ */
+(function generateStars() {
+  const field = $('star-field');
+  const frag  = document.createDocumentFragment();
+  
+  // Reducir estrellas en móvil
+  const isMobile = window.innerWidth <= 768;
+  const multiplier = isMobile ? 0.5 : 1;
+  
+  const layers = [
+    { count: Math.floor(100 * multiplier), cls: 'star-sm', size: [1,2],   op: [0.1,0.35], dur: [2,4],   speed: 0.02 },
+    { count: Math.floor(60 * multiplier),  cls: 'star-md', size: [2,3],   op: [0.2,0.5],  dur: [3,5],   speed: 0.04 },
+    { count: Math.floor(25 * multiplier),  cls: 'star-lg', size: [3,5],   op: [0.3,0.6],  dur: [4,7],   speed: 0.07 }
+  ];
+  layers.forEach(l => {
+    for (let i = 0; i < l.count; i++) {
+      const s = document.createElement('div');
+      const sz = l.size[0] + Math.random() * (l.size[1] - l.size[0]);
+      s.className = 'star ' + l.cls;
+      s.dataset.speedX = (Math.random() - 0.5) * l.speed;
+      s.dataset.speedY = (Math.random() - 0.5) * l.speed;
+      s.dataset.origX  = Math.random() * 100;
+      s.dataset.origY  = Math.random() * 100;
+      s.style.cssText = `
+        left: ${s.dataset.origX}%;
+        top:  ${s.dataset.origY}%;
+        --d:  ${l.dur[0] + Math.random() * (l.dur[1]-l.dur[0])}s;
+        --delay: ${Math.random() * 5}s;
+        --op: ${l.op[0] + Math.random() * (l.op[1]-l.op[0])};
+        width:  ${sz}px;
+        height: ${sz}px;
+      `;
+      frag.appendChild(s);
+    }
+  });
+  field.appendChild(frag);
+})();
+
+// Mouse parallax for stars
+let mx = 0.5, my = 0.5;
+document.addEventListener('mousemove', e => {
+  mx = e.clientX / window.innerWidth;
+  my = e.clientY / window.innerHeight;
+}, { passive: true });
+
+(function animStars() {
+  if (!isPageVisible) {
+    requestAnimationFrame(animStars);
+    return;
+  }
+  const stars = document.querySelectorAll('.star');
+  stars.forEach(s => {
+    const ox = parseFloat(s.dataset.origX);
+    const oy = parseFloat(s.dataset.origY);
+    const sx = parseFloat(s.dataset.speedX) * 100;
+    const sy = parseFloat(s.dataset.speedY) * 100;
+    s.style.left = (ox + (mx - 0.5) * sx) + '%';
+    s.style.top  = (oy + (my - 0.5) * sy) + '%';
+  });
+  animationFrameId = requestAnimationFrame(animStars);
+})();
+
+/* ══════════════════════════════════════════
+   GRID 3D TILT + SCROLL PARALLAX
+══════════════════════════════════════════ */
+let gridScrollY = 0;
+window.addEventListener('scroll', () => {
+  gridScrollY = window.scrollY;
+}, { passive: true });
+
+document.addEventListener('mousemove', e => {
+  const rx = (e.clientY / window.innerHeight - 0.5) * 4;
+  const ry = (e.clientX / window.innerWidth  - 0.5) * -4;
+  const g = $('grid');
+  if (g) g.style.transform = `translateY(${gridScrollY * 0.25}px) rotateX(${rx}deg) rotateY(${ry}deg)`;
+});
+window.addEventListener('scroll', () => {
+  const g = $('grid');
+  if (g) g.style.transform = `translateY(${window.scrollY * 0.25}px)`;
+}, { passive: true });
+
+/* ══════════════════════════════════════════
+   HERO TITLE 3D TILT
+═══════════════════════════════════════════ */
+document.addEventListener('mousemove', e => {
+  const title = $('hero-title');
+  if (!title) return;
+  const rx = (e.clientY / window.innerHeight - 0.5) * 8;
+  const ry = (e.clientX / window.innerWidth  - 0.5) * -8;
+  title.style.transform = `rotateX(${rx}deg) rotateY(${ry}deg)`;
+});
+
+/* ══════════════════════════════════════════
+   SECTION COLOR CHANGE ON SCROLL
+══════════════════════════════════════════ */
+const sectionColors = {
+  hero:     'rgba(5,5,15,0.4)',
+  about:    'rgba(5,10,15,0.3)',
+  pain:     'rgba(15,5,5,0.3)',
+  scale:    'rgba(5,15,10,0.3)',
+  results:  'rgba(10,10,5,0.3)',
+  survey:   'rgba(5,5,20,0.3)',
+  packages: 'rgba(10,5,15,0.3)',
+  faq:      'rgba(5,10,10,0.3)',
+  cta:      'rgba(15,10,5,0.3)'
+};
+const overlay = $('section-overlay');
+window.addEventListener('scroll', () => {
+  const scrollMid = window.scrollY + window.innerHeight / 2;
+  let active = 'hero';
+  document.querySelectorAll('section').forEach(sec => {
+    if (sec.offsetTop <= scrollMid) active = sec.id;
+  });
+  if (overlay) overlay.style.background = sectionColors[active] || 'transparent';
+}, { passive: true });
+
+/* ══════════════════════════════════════════
+   PARTICLE SYSTEM (canvas)
+═══════════════════════════════════════════ */
+const canvas = $('particle-canvas');
+const ctx    = canvas ? canvas.getContext('2d') : null;
+let particles = [];
+
+function resizeCanvas() {
+  if (!canvas) return;
+  canvas.width  = window.innerWidth;
+  canvas.height = window.innerHeight;
+}
+resizeCanvas();
+window.addEventListener('resize', resizeCanvas, { passive: true });
+
+class Particle {
+  constructor(x, y, color = '#fff') {
+    this.x  = x; this.y = y;
+    this.vx = (Math.random() - 0.5) * 8;
+    this.vy = (Math.random() - 0.5) * 8 - 2;
+    this.r  = 2 + Math.random() * 4;
+    this.alpha = 1;
+    this.color = color;
+    this.decay = 0.02 + Math.random() * 0.03;
+  }
+  update() {
+    this.x += this.vx; this.y += this.vy;
+    this.vy += 0.15;
+    this.alpha -= this.decay;
+    this.r = Math.max(0, this.r - 0.05);
+  }
+  draw() {
+    if (!ctx) return;
+    ctx.save();
+    ctx.globalAlpha = Math.max(0, this.alpha);
+    ctx.fillStyle   = this.color;
+    ctx.shadowBlur  = 6;
+    ctx.shadowColor = this.color;
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.restore();
+  }
+}
+
+class Confetti {
+  constructor(x, y) {
+    this.x = x;
+    this.y = y;
+    this.w = 4 + Math.random() * 6;
+    this.h = 2 + Math.random() * 4;
+    this.vx = (Math.random() - 0.5) * 12;
+    this.vy = (Math.random() - 0.5) * 8 - 3;
+    this.alpha = 1;
+    this.decay = 0.015 + Math.random() * 0.01;
+    this.rotation = Math.random() * Math.PI * 2;
+    this.rotationSpeed = (Math.random() - 0.5) * 0.2;
+    const colors = ['#ff69b4', '#87ceeb', '#ffffff', '#ffd700'];
+    this.color = colors[Math.floor(Math.random() * colors.length)];
+  }
+  update() {
+    this.x += this.vx;
+    this.y += this.vy;
+    this.vy += 0.2;
+    this.alpha -= this.decay;
+    this.rotation += this.rotationSpeed;
+  }
+  draw() {
+    if (!ctx) return;
+    ctx.save();
+    ctx.globalAlpha = Math.max(0, this.alpha);
+    ctx.fillStyle = this.color;
+    ctx.translate(this.x, this.y);
+    ctx.rotate(this.rotation);
+    ctx.fillRect(-this.w/2, -this.h/2, this.w, this.h);
+    ctx.restore();
+  }
+}
+
+function spawnParticles(x, y, count = 15, color = '#fff') {
+  for (let i = 0; i < count; i++) particles.push(new Particle(x, y, color));
+}
+
+function spawnConfetti(x, y, count = 20) {
+  for (let i = 0; i < count; i++) particles.push(new Confetti(x, y));
+}
+
+function animParticles() {
+  if (ctx && isPageVisible) {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    particles = particles.filter(p => p.alpha > 0);
+    particles.forEach(p => { p.update(); p.draw(); });
+  }
+  requestAnimationFrame(animParticles);
+}
+animParticles();
+
+/* ══════════════════════════════════════════
+   RIPPLE + PARTICLE CLICK
+══════════════════════════════════════════ */
+document.addEventListener('click', e => {
+  const target = e.target.closest('button, .scale-letter, .pain-item, .option-btn');
+  if (target) {
+    // Ripple
+    const r = document.createElement('div');
+    r.className = 'ripple';
+    r.style.cssText = `left:${e.clientX - 20}px;top:${e.clientY - 20}px;width:40px;height:40px;`;
+    document.body.appendChild(r);
+    setTimeout(() => r.remove(), 700);
+    // Particles
+    spawnParticles(e.client
